@@ -41,6 +41,7 @@ void *send_func(void *arg){
 }
 
 int main(){
+	char menu[256] = {0,};
 	pthread_t pth1, pth2;
 
 	if((sd = socket(AF_INET, SOCK_STREAM, 0)) == -1){ //tcp socket
@@ -68,13 +69,44 @@ int main(){
 		exit(1);
 	}
 
-	printf("=====chatting start=====\n");
+	memset(menu, '\0', sizeof(menu));
+	sprintf(menu, "%s", "=====Available services=====\n1. Chatting\n2. Game1\n\
+3. Game2\nEnter the service number\n");
+	//Send a list of available services to the client
+	send(ns, menu, strlen(menu)+1, 0);
 
-	pthread_create(&pth1, NULL, send_func, NULL);
-	pthread_create(&pth2, NULL, recv_func, NULL);
+	memset(menu, '\0', sizeof(menu));
+	//Receive client's desired service number
+	recv(ns, menu, sizeof(menu), 0);
+	//Message output received from client
+	printf("client selected %s\n", menu);
 
-	pthread_join(pth1, NULL);
-	pthread_join(pth2, NULL);
+
+	if(!strncmp(menu, "1", 1)){ //chatting program
+		printf("=====chatting start=====\n");
+
+		pthread_create(&pth1, NULL, send_func, NULL);
+		pthread_create(&pth2, NULL, recv_func, NULL);
+
+		pthread_join(pth1, NULL);
+		pthread_join(pth2, NULL);
+	}
+	if(!strncmp(menu, "2", 1)){ //game1
+		printf("=====game 1=====\n");
+
+		sleep(1); //bind error prevention
+		close(ns);
+		close(sd);
+		return(0);
+	}
+	if(!strncmp(menu, "3", 1)){ //game2
+		printf("=====game 2=====\n");
+
+		sleep(1); //bind error prevention
+		close(ns);
+		close(sd);
+		return(0);
+	}
 
 	close(ns);
 	close(sd);
