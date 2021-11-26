@@ -39,6 +39,7 @@ void *send_func(void *arg){
 }
 
 int main(){
+	char menu[256] = {0,};
 	struct sockaddr_in sin;
 	pthread_t pth1, pth2;
 
@@ -56,13 +57,37 @@ int main(){
 		exit(1);
 	}
 
-	printf("=====chatting start=====\n");
+	memset(menu, '\0', sizeof(menu));
+	//Receive a list of available services from server
+	recv(sd, menu, sizeof(menu), 0);
+	printf("%s", menu);
 
-	pthread_create(&pth1, NULL, send_func, NULL);
-	pthread_create(&pth2, NULL, recv_func, NULL);
+	memset(menu, '\0', sizeof(menu));
+	printf("Enter the number: ");
+	fgets(menu, sizeof(menu), stdin);
+	//Send client's desired service number
+	send(sd, menu, strlen(menu)+1, 0);
 
-	pthread_join(pth1, NULL);
-	pthread_join(pth2, NULL);
+	if(!strncmp(menu, "1", 1)){
+		printf("=====chatting start=====\n");
 
+		pthread_create(&pth1, NULL, send_func, NULL);
+		pthread_create(&pth2, NULL, recv_func, NULL);
+
+		pthread_join(pth1, NULL);
+		pthread_join(pth2, NULL);
+	}
+	if(!strncmp(menu, "2", 1)){
+		printf("=====game 1=====\n");
+
+		sleep(1);
+		close(sd);
+	}
+	if(!strncmp(menu, "3", 1)){
+		printf("=====game 2=====\n");
+
+		sleep(1);
+		close(sd);
+	}
 	close(sd);
 }
