@@ -8,7 +8,7 @@
 #include <pthread.h>
 #include <ncurses.h>
 
-#define PORTNUM 9004
+#define PORTNUM 9000
 #define HEIGHT 15
 #define WIDTH 55
 
@@ -25,7 +25,6 @@ void *recv_func(void *arg){
 		if(strncmp(rbuf, "exit", 4) == 0)
 			exit(0);
 		if(rlen > 0){
-			//printf("server: %s", rbuf);	
 	
 			if(r >= 14){
 				r = 1;
@@ -34,8 +33,6 @@ void *recv_func(void *arg){
 			move(r++, c);
 			printw("server: ");
 			printw("%s", rbuf);
-			//char *a = (char *)arg;
-			//mvwprintw((WINDOW *)arg, 1, 1, "hello");
 			refresh();
 		}
 		
@@ -45,18 +42,11 @@ void *recv_func(void *arg){
 void *send_func(void *arg){
 	while(1){
 		memset(sbuf, '\0', sizeof(sbuf));
-		//printf("Enter message: %s\n", fgets(sbuf, sizeof(sbuf), stdin));
 		
 		move(30, 2);
-		//printf("client: ");
-		//scanf("%s", sbuf);
-		//printf("%s", sbuf);
 		printw("client: ");
 		scanw("%s", sbuf);
 		sbuf[strlen(sbuf)] = '\0';
-		
-		//printw("%s", sbuf);
-		//
 		
 		if(send(sd, sbuf, strlen(sbuf), 0) == -1){
 			perror("send");
@@ -68,8 +58,6 @@ void *send_func(void *arg){
 			clear();
 		}
 		move(r++, c);
-		//printw("client: ");
-		//printw("%s", sbuf);
 		refresh();
 		if(strncmp(sbuf, "exit", 4) == 0)
 			exit(0);
@@ -124,24 +112,13 @@ int main(){
 		WINDOW *win = newwin(HEIGHT, WIDTH, starty, startx);
 		refresh();
 		mvwprintw(win, 1, 1, "======chatting start==============\n");
-		//printf("=====chatting start=====\n");
 
 		box(win, 0, 0);
 		scrollok(win, TRUE);
 		wrefresh(win);
 
-		//WINDOW *subwin = newwin(HEIGHT, WIDTH, starty, startx);
-		//refresh();
-
-		//box(subwin, 30, 30);
-		//wrefresh(subwin);
-
-
-		//void *arg = win;
 		pthread_create(&pth1, NULL, send_func, NULL);
-		//wrefresh(win);
 		pthread_create(&pth2, NULL, recv_func, NULL);
-		//wrefresh(win);
 
 		pthread_join(pth1, NULL);
 		pthread_join(pth2, NULL);
