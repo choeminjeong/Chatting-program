@@ -12,7 +12,7 @@ C언어를 사용하여 개발했습니다.
 - [최민정](https://github.com/choeminjeong)(빅데이터학과 3학년)
   - 가위바위보 게임 구현
   - 발표 자료 제작
-- [최서원](https://github.com/choeseowon)(콘텐츠IT학과 2학년)
+- [최서원](https://github.com/choeseowon)(빅데이터학과 2학년)
   - 베스킨라빈스 게임 구현
   - 발표 자료 제작 
 - [이승희](https://github.com/dltmdgml)(빅데이터학과 3학년)
