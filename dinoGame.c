@@ -102,8 +102,8 @@ int main(void){
 				jump = false;
 			}
 
-			poop_shape(poop_x, POOP_Y);
 			dog_shape(0, dog_y);
+			poop_shape(poop_x, POOP_Y);
 
 			mvprintw(5, 5, "hello");
 			refresh();
