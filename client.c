@@ -8,7 +8,7 @@
 #include <pthread.h>
 #include "avoidCharGame.h"
 
-#define PORTNUM 9009
+#define PORTNUM 9031
 #define WIDTH 30
 #define HEIGHT 10
 #define BLUE 4;
@@ -136,7 +136,7 @@ int main()
 		return 0;
 	} //end choice 2
 	if(choice == 3){ //start choice 3 baskin robbins
-			strcpy(menu, "3");
+		strcpy(menu, "3");
 		send(sd, menu, strlen(menu)+1, 0);
 		initscr();
 		curs_set(TRUE);
@@ -236,18 +236,16 @@ int main()
 		mvprintw(2,0,"Is this an odd number or an even number?(odd, even)\n");
 
 		memset(sbuf, '\0', sizeof(sbuf));
-		//printf("Enter(odd or even): %s", fgets(sbuf, sizeof(sbuf), stdin));
 		mvprintw(3,0,"Enter(odd or even): ");
 		scanw("%s", sbuf);
 		send(sd, sbuf, sizeof(sbuf), 0);
 
-		printf("recv: %s, send: %s\n", rbuf, sbuf);
-
-		if(!strcmp(rbuf, sbuf) == 0){
-            mvprintw(5,0,"=====CLIENT WIN!=====\n");
+		if(strcmp(rbuf, sbuf) == 0){
+            mvprintw(6,0,"=====CLIENT WIN!=====\n");
 		}else{
-            mvprintw(5,0,"=====CLIENT LOSE!=====\n");
+            mvprintw(6,0,"=====CLIENT LOSE!=====\n");
 		}
+		refresh();
 
 		sleep(5);
 		close(sd);
@@ -529,4 +527,3 @@ void poop_shape(int x, int y){
 	mvprintw(y++, x, " ooo \n");
 	mvprintw(y++, x, "ooooo\n");
 }
-
