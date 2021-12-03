@@ -10,7 +10,7 @@
 #include <ncurses.h>
 #include <time.h>
 
-#define PORTNUM 9009
+#define PORTNUM 9031
 
 char rbuf[256], sbuf[256];
 struct sockaddr_in sin, cli;
@@ -164,7 +164,7 @@ int main(){
 
 		printf("recv: %s, send: %s\n", rbuf, sbuf);
 
-		if(!strcmp(rbuf, sbuf) == 0){
+		if(strcmp(rbuf, sbuf) == 0){
             printf("=====CLIENT WIN!=====\n");
         }else{
             printf("=====CLIENT LOSE!=====\n");
@@ -189,7 +189,7 @@ int main(){
 	}
 	if(!strncmp(menu, "6", 1)){ //Rush Dog
 		printf("=====Rush Dog Game=====\n");
-		
+
 		memset(rbuf, '\0', sizeof(rbuf));
 		recv(ns, rbuf, sizeof(rbuf), 0);
 		printf("client's score is %s\n", rbuf);
@@ -207,4 +207,3 @@ int main(){
 	return 0;
 
 }
-
