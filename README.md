@@ -1,4 +1,4 @@
-# MINI XBOX
+# **MINI XBOX**
 
 
 ### 구성원 및 담당파트
