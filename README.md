@@ -21,6 +21,7 @@
 - 사용할 수 있는 디바이스
 개발된 프로그램은 PC환경에서 동작됩니다.
 - 다이어그램
+![KakaoTalk_20211205_022128399](https://user-images.githubusercontent.com/52689963/144718758-f4ec0fb1-6b58-4240-bed6-7bad50a41ff8.png)
 
 
 ### 결과물 소개
